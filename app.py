@@ -2,9 +2,9 @@ import streamlit as st
 import pickle
 import pandas as pd
 import warnings
+import plotly.express as px
 
 warnings.filterwarnings('ignore')
-import plotly.express as px
 
 with open('data.pickle', 'rb') as file:
     h_model = pickle.load(file)
