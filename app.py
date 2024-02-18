@@ -1,9 +1,8 @@
 import streamlit as st
 import pickle
 import pandas as pd
-import warnings
 import plotly.express as px
-
+import warnings
 warnings.filterwarnings('ignore')
 
 with open('data.pickle', 'rb') as file:
