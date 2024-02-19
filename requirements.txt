@@ -1,4 +1,4 @@
-streamlit==1.3.0
-pandas==1.4.0
-plotly==5.3.1
-warnings==0.1.3
+streamlit
+pandas
+plotly
+warnings>=0.1.3
