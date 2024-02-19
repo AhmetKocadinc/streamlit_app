@@ -1,7 +1,6 @@
 import streamlit as st
 import pickle
 import pandas as pd
-import plotly.express as px
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -12,7 +11,7 @@ with open('price.pickle', 'rb') as file:
     p_model = pickle.load(file)
 
 st.set_page_config(page_title='Ahmet Kocadinç Projeler')
-tabs = ['Kalp Krizi Risk Tahmini', 'Kalp Krizi Risk Tahmini Dashboard', 'Ev Fiyat Tahmini', 'Ev Fiyat Tahmini Dashboard' ,'Hakkımda']
+tabs = ['Kalp Krizi Risk Tahmini',  'Ev Fiyat Tahmini', 'Hakkımda']
 
 page = st.sidebar.radio('Ana Menü', tabs)
 
@@ -95,54 +94,6 @@ if page == 'Kalp Krizi Risk Tahmini':
         else:
             st.success('Hastada Kalp Krizi Riski Bulunmuyor')
 
-if page == 'Kalp Krizi Risk Tahmini Dashboard':
-
-    df = pd.read_csv('datasets/heart.csv')
-    df.head()
-    df.info()
-
-    plots1 = df.drop(['HeartDisease', 'ExerciseAngina'], axis=1)
-
-    plots2 = df.drop(['Age', 'FastingBS', 'HeartDisease'], axis=1)
-
-    cat_cols = [col for col in plots1.columns if df[col].dtype in ['object']]
-    num_cols = [col for col in plots2.columns if df[col].dtype in ['int64', 'float64']]
-
-
-    st.title('Dashboard')
-    st.write("""Bu kısımda verisetindeki verilerin grafiklerini inceleyebilirsiniz.""")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        for col in cat_cols:
-            count_df = df[col].value_counts().reset_index()
-            count_df.columns = [col, 'count']
-            fig = px.bar(count_df, x=col, y='count', title=f'{col} Count Plot', labels={'count': 'Count'})
-            st.plotly_chart(fig, use_container_width=True)
-
-    with col2:
-        for col in cat_cols:
-            counts = df[col].value_counts()
-            fig_pie = px.pie(names=counts.index, values=counts.values, title=f'{col} Pie Chart')
-            st.plotly_chart(fig_pie, use_container_width=True)
-
-    with col3:
-        for col in num_cols:
-            hist = px.histogram(x=df[col], title=f'{col} Histogram')
-            st.plotly_chart(hist, use_container_width=True)
-
-    st.write("""Bu kısımda yaş aralığını seçip, kaç hasta kaydı oluğunu ve ayrıntıları inceleyebilirsiniz""")
-    min_age = st.slider('Minimum Yaş', min_value=df['Age'].min(), max_value=df['Age'].max(), value=df['Age'].min())
-    max_age = st.slider('Maksimum Yaş', min_value=df['Age'].min(), max_value=df['Age'].max(), value=df['Age'].max())
-
-    filt = df[(df['Age'] >= min_age) & (df['Age'] <= max_age)]
-    filt_ht_y = df[(df['Age'] >= min_age) & (df['Age'] <= max_age) & (df['HeartDisease']) == 1]
-    filt_ht_n = df[(df['Age'] >= min_age) & (df['Age'] <= max_age) & (df['HeartDisease']) == 0]
-
-    st.write(f'Seçilen yaş aralığındaki toplam hasta sayısı {len(filt)}')
-    st.write(f'Kalp krizi riski bulunan hasta sayısı {len(filt_ht_y)}')
-    st.write(f'Kalp krizi riski bulunmayan hasta sayısı {len(filt_ht_n)}')
 
 if page == 'Ev Fiyat Tahmini':
     st.title("Ev Fiyat Tahmini")
@@ -292,24 +243,6 @@ if page == 'Ev Fiyat Tahmini':
 
         st.success(f'Evin tahmini fiyatı {ev_predict}')
 
-if page == 'Ev Fiyat Tahmini Dashboard':
-
-    st.title('Ev Fiyat Tahmini Dashboard')
-    st.write("""Bu sayfada ev fiyat tahminine ait olan verisetinin verilerini görselleştirilmiş olarak inceleyebilirsiniz""")
-
-    df2 = pd.read_csv('datasets/NY_House_Dataset.csv')
-    df2.head()
-    df2.info()
-
-    df2 = df2[['TYPE','BEDS','BATH','LOCALITY','SUBLOCALITY','STREET_NAME','PROPERTYSQFT','PRICE']]
-
-    cat_cols_ny = [col for col in df2.columns if df2[col].dtype in ['object']]
-
-    for col in cat_cols_ny:
-        count_df_ny = df2[col].value_counts().reset_index()
-        count_df_ny.columns = [col, 'count']
-        figs = px.bar(count_df_ny, x=col, y='count', title=f'{col} Count Plot', labels={'count': 'Count'})
-        st.plotly_chart(figs, use_container_width=True)
 
 if page == 'Hakkımda':
     st.header('Ahmet KOCADİNÇ')
