@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
-import sklearn
+
 
 with open('data.pickle', 'rb') as file1:
     h_model = pickle.load(file1)
