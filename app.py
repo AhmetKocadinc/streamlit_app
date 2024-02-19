@@ -4,11 +4,11 @@ import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
 
-with open('data.pickle', 'rb') as file:
-    h_model = pickle.load(file)
+with open('data.pickle', 'rb') as file1:
+    h_model = pickle.load(file1)
 
-with open('price.pickle', 'rb') as file:
-    p_model = pickle.load(file)
+with open('price.pickle', 'rb') as file2:
+    p_model = pickle.load(file2)
 
 st.set_page_config(page_title='Ahmet Kocadinç Projeler')
 tabs = ['Kalp Krizi Risk Tahmini',  'Ev Fiyat Tahmini', 'Hakkımda']
