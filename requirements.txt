@@ -1,5 +1,4 @@
 streamlit
 pandas
-ploty.express
 numpy
 streamlit.option_menu
