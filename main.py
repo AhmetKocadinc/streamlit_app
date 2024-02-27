@@ -5,11 +5,11 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-with open('data.pickle', 'rb') as file1:
-    h_model = pickle.load(file1)
+with open('data.pickle', 'rb') as file:
+    h_model = pickle.load(file)
 
-with open('price.pickle', 'rb') as file2:
-    p_model = pickle.load(file2)
+with open('price.pickle', 'rb') as file:
+    p_model = pickle.load(file)
 
 st.set_page_config(page_title='Ahmet Kocadinç Projeler')
 tabs = ['Kalp Krizi Risk Tahmini',  'Ev Fiyat Tahmini', 'Hakkımda']
@@ -242,7 +242,7 @@ if page == 'Ev Fiyat Tahmini':
 
         ev_predict = p_model.predict(inputs_df)
 
-        st.success(f'Evin tahmini fiyatı {ev_predict}')
+        st.success(f'Evin tahmini fiyatı''f$ {ev_predict}')
 
 
 if page == 'Hakkımda':
